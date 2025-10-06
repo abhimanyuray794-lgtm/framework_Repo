@@ -35,12 +35,13 @@ public class BaseClassForAbhiTek {
 		System.out.println("connect to database!");
 	}
 
-	@Parameters("browser")
+//	@Parameters("browser")
 	@BeforeClass (groups = {"smokeTest","regressionTest"})
-	public void configBC(String browser) throws IOException {
+//	public void configBC(String browser) throws IOException {
+	public void configBC() throws IOException {
 		System.out.println("launch browser!");
-		String BROWSER = browser;
-//		String BROWSER = plib.readDataFromPropertiesFile("browser");
+//		String BROWSER = browser;
+		String BROWSER = System.getProperty("browser",plib.readDataFromPropertiesFile("browser"));
 		if (BROWSER.equals("chrome")) {
 			driver = new ChromeDriver();
 		} else {
@@ -53,9 +54,9 @@ public class BaseClassForAbhiTek {
 	public void configBM() throws Throwable {
 		System.out.println("navigate to url and login!");
 
-		String URL = plib.readDataFromPropertiesFile("url");
-		String USERNAME = plib.readDataFromPropertiesFile("username");
-		String PASSWORD = plib.readDataFromPropertiesFile("password");
+		String URL = System.getProperty("url",plib.readDataFromPropertiesFile("url"));
+		String USERNAME = System.getProperty("username",plib.readDataFromPropertiesFile("username"));
+		String PASSWORD = System.getProperty("password",plib.readDataFromPropertiesFile("password"));
 
 		LoginPage lp = new LoginPage(driver);
 		lp.loginToApp(URL, USERNAME, PASSWORD);
